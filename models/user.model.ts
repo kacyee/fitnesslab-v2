@@ -12,10 +12,12 @@ import {
   UpdatedAt,
   DeletedAt,
   BelongsToMany,
+  BeforeCreate,
 } from 'sequelize-typescript';
 import { UserType } from '../types/user.type';
 import Training from './training.model';
 import UserHasTrainings from './user_has_trainings.model';
+import { encryptPassword } from '../middleware/passwordEncryptor';
 
 @Table({
   timestamps: true,
@@ -57,4 +59,10 @@ export default class User extends Model implements UserType {
 
   @DeletedAt
   deleted_at!: Date;
+
+  @BeforeCreate
+  static async encryptPassword(user: User) {
+    let encryptedPassword: any = await encryptPassword(user.password);
+    user.password = String(encryptedPassword);
+  }
 }

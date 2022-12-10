@@ -7,7 +7,6 @@ export default class UserHasTrainingsService {
     training_id,
   }: CreateUserTrainingType) {
     return new Promise((resolve, reject) => {
-      User;
       UserHasTrainings.create({
         user_id: user_id,
         training_id: training_id,

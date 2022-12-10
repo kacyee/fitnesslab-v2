@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import UserController from '../controllers/user.controller';
+import { authJwt } from '../middleware';
 
 export default class UserRoutes {
   private router = Router();
@@ -15,7 +16,8 @@ export default class UserRoutes {
 
   private createRoutes() {
     this.router.post('/create-user', this.userController.createUser);
-    this.router.get('/', this.userController.getUsers);
+    this.router.get('/', [authJwt.verifyToken], this.userController.getUsers);
     this.router.post('/add-training', this.userController.setTrainingToUser);
+    this.router.post('/sign-in', this.userController.signInUser);
   }
 }

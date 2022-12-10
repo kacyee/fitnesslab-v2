@@ -50,6 +50,23 @@ class UserService {
             });
         });
     }
+    static getUserByEmail(email) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                user_model_1.default.findOne({
+                    where: {
+                        email: email,
+                    },
+                })
+                    .then(user => {
+                    resolve(user);
+                })
+                    .catch((err) => {
+                    reject({ http_code: 500, reason: err });
+                });
+            });
+        });
+    }
     static setTrainingToUser({ user_id, training_id, }) {
         return __awaiter(this, void 0, void 0, function* () {
             return new Promise((resolve, reject) => {
@@ -63,6 +80,29 @@ class UserService {
                     .catch((err) => {
                     console.log(err);
                     reject({ http_code: 500, reason: err });
+                });
+            });
+        });
+    }
+    static signInUser(email, password) {
+        return __awaiter(this, void 0, void 0, function* () {
+            return new Promise((resolve, reject) => {
+                user_model_1.default.findOne({
+                    where: {
+                        email: email,
+                    },
+                })
+                    .then(user => {
+                    if (!user)
+                        throw { responseCode: 401, reason: 'User does not exists' };
+                    // const isPasswordValid = bcrypt.compareSync(password, user!.password);
+                    // console.log('here', isPasswordValid);
+                    // if (!isPasswordValid) reject({ responseCode: 401 });
+                    // const token = jwt.sign({ id: user!.id }, process.env.secret!);
+                    // resolve({ http_code: 200, user: { user, token } });
+                })
+                    .catch(err => {
+                    reject({ http_code: 404, reason: err });
                 });
             });
         });
