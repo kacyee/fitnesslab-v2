@@ -30,7 +30,7 @@ app.get('/', (req, res) => {
 });
 app.use('/', routes_1.default);
 (() => __awaiter(void 0, void 0, void 0, function* () {
-    yield database_1.default.sync({ force: true });
+    yield database_1.default.sync({ force: false });
     app.listen(app.get('port'), () => {
         console.log(`[APP] Servidor encendido en el puerto ${app.get('port')} 👍!`);
     });

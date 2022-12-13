@@ -20,7 +20,7 @@ app.get('/', (req: Request, res: Response) => {
 app.use('/', router);
 
 (async () => {
-  await sequelize.sync({ force: true });
+  await sequelize.sync({ force: false });
 
   app.listen(app.get('port'), () => {
     console.log(`[APP] Servidor encendido en el puerto ${app.get('port')} 👍!`);
